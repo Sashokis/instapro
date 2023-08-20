@@ -23,7 +23,6 @@ export function renderUploadImageComponent({ element, onImageUrlChange }) {
                 />
                 Выберите фото
             </label>
-          
       `
       }
   </div>
@@ -38,6 +37,7 @@ export function renderUploadImageComponent({ element, onImageUrlChange }) {
         lableEl.setAttribute("disabled", true);
         lableEl.textContent = "Загружаю файл...";
         uploadImage({ file }).then(({ fileUrl }) => {
+          console.log(fileUrl);
           imageUrl = fileUrl;
           onImageUrlChange(imageUrl);
           render();
