@@ -23,8 +23,7 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
                 <textarea 
                   class="input textarea" 
                   id = "text-input" 
-                  rows="4">
-                </textarea>
+                  rows="4"></textarea>
               </label>
               <button class="button" id="add-button">Добавить</button>
           </div>

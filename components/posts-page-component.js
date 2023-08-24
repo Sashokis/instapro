@@ -18,7 +18,7 @@ export function renderPostsPageComponent({ appEl }) {
     : "./assets/images/like-not-active.svg";
 
     return ` <li class="post">
-      <div class="post-header" data-user-id="${post.id}">
+      <div class="post-header" data-user-id="${post.user.id}">
           <img src="${post.user.imageUrl}" class="post-header__user-image">
           <p class="post-header__user-name">${post.user.name}</p>
       </div>
@@ -27,7 +27,7 @@ export function renderPostsPageComponent({ appEl }) {
         <img class="post-image" src="${post.imageUrl}">
       </div>
       <div class="post-likes">
-        <button data-post-id="${post.likes.id}" class="like-button">
+        <button data-post-id="${post.id}" class="like-button">
           <img src="${likeIcon}">
         </button>
         <p class="post-likes-text">
