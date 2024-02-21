@@ -15,12 +15,14 @@ import {
   removeUserFromLocalStorage,
   saveUserToLocalStorage,
 } from "./helpers.js";
+import { likes } from "./likes.js";
 
 export let user = getUserFromLocalStorage();
 export let page = null;
 export let posts = [];
+export let carrentUserId = null;
 
-const getToken = () => {
+export const getToken = () => {
   const token = user ? `Bearer ${user.token}` : undefined;
   return token;
 };
@@ -43,7 +45,8 @@ export const goToPage = (newPage, data) => {
       USER_POSTS_PAGE,
       LOADING_PAGE,
     ].includes(newPage)
-  ) {
+  ) 
+  {
     if (newPage === ADD_POSTS_PAGE) {
       // Если пользователь не авторизован, то отправляем его на авторизацию перед добавлением поста
       page = user ? ADD_POSTS_PAGE : AUTH_PAGE;
@@ -59,6 +62,7 @@ export const goToPage = (newPage, data) => {
           page = POSTS_PAGE;
           posts = newPosts;
           renderApp();
+          likes(); 
         })
         .catch((error) => {
           console.error(error);
@@ -75,6 +79,8 @@ export const goToPage = (newPage, data) => {
           page = USER_POSTS_PAGE;
           posts = newPosts;
           renderApp();
+          carrentUserId = data.userId;
+          likes();
         })
         .catch((error) => {
           console.error(error);
@@ -118,7 +124,6 @@ const renderApp = () => {
     return renderAddPostPageComponent({
       appEl,
       onAddPostClick({ description, imageUrl }) {
-        // TODO: реализовать добавление поста в API
         console.log("Добавляю пост...", { description, imageUrl });
         addPost({ description, imageUrl, token: getToken()  })
         .then(() =>{
@@ -152,4 +157,39 @@ const renderApp = () => {
   }
 };
 
+export const renderLike = () => {
+    if (page === POSTS_PAGE) {
+      return getPosts({ token: getToken() })
+      .then((newPosts) => {
+        console.log(page);
+          // page = POSTS_PAGE;
+          posts = newPosts;
+          renderApp();
+          likes();
+      })
+      .catch((error) => {
+          console.error(error);
+          goToPage(POSTS_PAGE);
+      });
+    }
+    else if(page === USER_POSTS_PAGE){
+      return userPosts({ token: getToken(), id: carrentUserId})
+      .then((newPosts) => {
+        console.log(page);
+          // page = POSTS_PAGE;
+          posts = newPosts;
+          renderApp();
+          likes();
+      })
+      .catch((error) => {
+          console.error(error);
+          goToPage(POSTS_PAGE);
+      });
+    }
+  
+  
+}
+
 goToPage(POSTS_PAGE);
+
+
