@@ -2,6 +2,13 @@ import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
 import { posts, goToPage } from "../index.js";
 import { sanitizeHtml } from "/sanitizeHTML.js";
+import {  formatDistanceToNow } from'../date-fns';
+// import { formatDistanceToNow } from 'date-fns/esm';
+
+import { ru } from 'date-fns/locale';
+   
+
+
 
 export function renderPostsPageComponent({ appEl }) {
   console.log("Актуальный список постов:", posts);
@@ -40,8 +47,8 @@ export function renderPostsPageComponent({ appEl }) {
         <span class="user-name">${post.user.name}</span>
         ${sanitizeHtml(post.description)}
       </p>
-      <p class="post-date">
-        ${post.createdAt}
+      <p class="post-date">  
+      ${formatDistanceToNow(new Date(post.createdAt), {locale: 'ru'}) } назад
       </p>
     </li>`;
   })
