@@ -2,7 +2,7 @@ import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
 import { posts, goToPage } from "../index.js";
 import { sanitizeHtml } from "/sanitizeHTML.js";
-import {  formatDistanceToNow } from'../date-fns';
+import {  formatDistanceToNow } from'date-fns';
 // import { formatDistanceToNow } from 'date-fns/esm';
 
 import { ru } from 'date-fns/locale';
@@ -48,7 +48,9 @@ export function renderPostsPageComponent({ appEl }) {
         ${sanitizeHtml(post.description)}
       </p>
       <p class="post-date">  
-      ${formatDistanceToNow(new Date(post.createdAt), {locale: 'ru'}) } назад
+     
+      ${formatDistanceToNow(new Date(post.createdAt), {locale: ru})} назад
+
       </p>
     </li>`;
   })

@@ -7,7 +7,6 @@
     "webpack-cli": "^5.1.4"
   },
   "scripts": {
-  "dev": "webpack --mode development --watch"
-}
-
+    "dev": "webpack --mode development --watch"
+  }
 }
